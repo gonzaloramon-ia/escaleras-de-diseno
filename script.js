@@ -5,6 +5,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 
+const whatsappPhone='5491159531743';
+document.querySelectorAll('a[href*="wa.me/"]').forEach(a=>{
+  const current=new URL(a.href);
+  const text=current.searchParams.get('text') || 'Hola, quiero consultar por una escalera de diseño';
+  a.href=`https://wa.me/${whatsappPhone}?text=${encodeURIComponent(text)}`;
+});
+
 const style=document.createElement('style');
 style.textContent=`
   .section{padding:58px 0!important}
@@ -15,12 +22,18 @@ style.textContent=`
   .mission-panel h2{max-width:720px}
   .quote-card.text-only blockquote{padding-bottom:46px}
   .quote-card.text-only{min-height:auto}
+  .author-full.compact-bio p{font-size:18px;line-height:1.62;max-width:900px}
+  .author-full.compact-bio .bio-actions{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap}
   .philosophy{grid-template-columns:110px 1.1fr repeat(4,1fr)!important;gap:22px!important;padding:38px 0!important}
   @media (max-width:1100px){.works-grid,.works-grid.compact{grid-template-columns:1fr 1fr!important}.work-main{grid-row:span 1!important}}
   @media (max-width:980px){.hero-copy{padding:46px 24px 30px!important}.hero-image{min-height:380px!important}.works-grid,.works-grid.compact{grid-template-columns:1fr!important}.works-grid{grid-auto-rows:auto!important}.mission-panel{padding:30px 22px}.mission-panel p{font-size:clamp(30px,9vw,48px)}}
   @media (max-width:560px){.section{padding:40px 0!important}}
 `;
 document.head.appendChild(style);
+
+document.querySelectorAll('.nav a').forEach(a=>{
+  if(a.getAttribute('href')==='#galeria' || a.getAttribute('href')==='../#galeria') a.textContent='Misión';
+});
 
 const works=document.querySelector('#obras .works-grid');
 if(works){
@@ -41,6 +54,18 @@ if(gallery){
       <h2>Una pieza de arte para contemplar.</h2>
       <p>Nuestra misión no es hacer simples escaleras llamativas, sino crear piezas de arte para contemplar.</p>
     </div>
+  `;
+}
+
+const authorFull=document.querySelector('#autor .author-full');
+if(authorFull){
+  authorFull.classList.add('compact-bio');
+  authorFull.innerHTML=`
+    <span class="kicker">Autoría</span>
+    <h2>Arte, espacio y mirada.</h2>
+    <p><strong>Gonzalo R. Ríos</strong> integra arte, arquitectura y diseño para pensar cada escalera como una obra funcional: estructura, luz, vidrio y proporción al servicio de una presencia visual capaz de transformar una casa.</p>
+    <p>Su mirada parte de la observación del espacio, la composición, los materiales y la forma en que una pieza modifica la experiencia de habitar un lugar.</p>
+    <div class="bio-actions"><a class="btn ghost" href="autor/">Leer versión completa</a></div>
   `;
 }
 
